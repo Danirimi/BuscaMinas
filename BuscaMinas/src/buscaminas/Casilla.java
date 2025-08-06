@@ -12,13 +12,24 @@ public class Casilla {
     private int posFila;
     private int posColumna;
     private boolean mina;
+    private int numMinasAlrededor;
 
     public Casilla(int posFila, int posColumna) {
         this.posFila = posFila;
         this.posColumna = posColumna;
-        
+        this.mina = mina;
+        this.numMinasAlrededor = numMinasAlrededor;
     }
 
+    public int getNumMinasAlrededor() {
+        return numMinasAlrededor;
+    }
+
+    public void setNumMinasAlrededor(int numMinasAlrededor) {
+        this.numMinasAlrededor = numMinasAlrededor;
+    }
+
+ 
     public int getPosFila() {
         return posFila;
     }
@@ -41,6 +52,10 @@ public class Casilla {
 
     public void setMina(boolean mina) {
         this.mina = mina;
+    }
+    
+    public void IncrementarNumeroMinasAlrededor(){
+        this.numMinasAlrededor++;
     }
     
     
