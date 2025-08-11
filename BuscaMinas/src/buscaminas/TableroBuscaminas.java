@@ -22,14 +22,16 @@ public class TableroBuscaminas {
     
     
      Consumer<List<Casilla>> eventoPartidaPerdida;
+     
+     Consumer<Casilla> eventoCasillaAbierta;
   
     
 
     public TableroBuscaminas(int numFilas, int numColumnas, int numMinas) {
-            this.numFilas = numFilas;
-    this.numColumnas=numColumnas;
-    this.numMinas=numMinas;
-    inicializarCasillas();
+       this.numFilas = numFilas;
+       this.numColumnas=numColumnas;
+       this.numMinas=numMinas;
+       this.inicializarCasillas();
     System.out.println("Número de minas esperadas: " + numMinas);
     }
 
@@ -141,6 +143,7 @@ public class TableroBuscaminas {
          return listaCasillas;
      }
      public void seleccionarCasillas(int posFila, int posColumna){
+         eventoCasillaAbierta.accept(this.casilla[posFila][posColumna]);
          if (this.casilla[posFila][posColumna].isMina()){
              List<Casilla> casillasConMinas=new LinkedList<>();
               for (int i = 0; i < casilla.length; i++) {
@@ -151,6 +154,16 @@ public class TableroBuscaminas {
             }
           }
             eventoPartidaPerdida.accept(casillasConMinas);
+         }else if (this.casilla[posFila][posColumna].getNumMinasAlrededor() == 0) {
+            List<Casilla> casillasAlrededor = obtenerCasillasAlrededor(posFila, posColumna);
+             for (Casilla casilla : casillasAlrededor) {
+                 if (!casilla.isAbierta()) {
+                       casilla.setAbierta(true);
+                        if (casilla.getNumMinasAlrededor() == 0) {
+                            seleccionarCasillas(casilla.getPosFila(), casilla.getPosColumna());
+                        }
+                 }
+             }
          }
      }
      
@@ -167,6 +180,10 @@ public class TableroBuscaminas {
      */
     public void setEventoPartidaPerdida(Consumer<List<Casilla>> eventoPartidaPerdida) {
         this.eventoPartidaPerdida = eventoPartidaPerdida;
+    }
+    
+    public void setEventoCasillaAbierta(Consumer<Casilla> eventoCasillaAbierta){
+        this.eventoCasillaAbierta= eventoCasillaAbierta;
     }
   
     }

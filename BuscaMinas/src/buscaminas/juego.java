@@ -30,6 +30,7 @@ public class juego extends javax.swing.JFrame {
     public juego() {
         initComponents();
         cargarControles();
+        crearTableroBuscaminas();
     }
     private void crearTableroBuscaminas(){
         tableroBuscaminas=new TableroBuscaminas(numFila, numColumnas, nummMinas);
@@ -40,6 +41,15 @@ public class juego extends javax.swing.JFrame {
                  botonesTablero[casillaConMina.getPosFila()][casillaConMina.getPosColumna()].setText("*");
                  
              }   
+            }
+        });
+        
+        tableroBuscaminas.setEventoCasillaAbierta(new Consumer<Casilla>() {
+            @Override
+            public void accept(Casilla t) {
+              botonesTablero[t.getPosFila()][t.getPosColumna()].setEnabled(false);
+              botonesTablero[t.getPosFila()][t.getPosColumna()].setText(t.getNumMinasAlrededor()+"");
+               
             }
         });
         tableroBuscaminas.imprimirTablero();
@@ -81,15 +91,15 @@ public class juego extends javax.swing.JFrame {
             }
         }
     }
-                    private void btnClick(ActionEvent e) {
-                     JButton btn = (JButton)e.getSource();
-                     String [] coordenada=btn.getName().split(",");
-                     int posFila=Integer.parseInt(coordenada[0]);
-                     int posColumna=Integer.parseInt(coordenada[1]);
-                      JOptionPane.showMessageDialog(rootPane, posFila+","+posColumna);
-                      tableroBuscaminas.seleccionarCasillas(posFila, posColumna);
+    private void btnClick(ActionEvent e) {
+        JButton btn = (JButton)e.getSource();
+        String [] coordenada=btn.getName().split(",");
+        int posFila=Integer.parseInt(coordenada[0]);
+        int posColumna=Integer.parseInt(coordenada[1]);
+        JOptionPane.showMessageDialog(rootPane, posFila+","+posColumna);
+        tableroBuscaminas.seleccionarCasillas(posFila, posColumna);
 
-                    }
+    }
               
              
         
