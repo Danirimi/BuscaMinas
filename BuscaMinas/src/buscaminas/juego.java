@@ -43,7 +43,7 @@ public class juego extends javax.swing.JFrame {
             }
         });
         tableroBuscaminas.imprimirTablero();
-       
+
     }
     
     private void cargarControles(){
@@ -87,7 +87,7 @@ public class juego extends javax.swing.JFrame {
                      int posFila=Integer.parseInt(coordenada[0]);
                      int posColumna=Integer.parseInt(coordenada[1]);
                       JOptionPane.showMessageDialog(rootPane, posFila+","+posColumna);
-                      tableroBuscaminas.inicializarCasillas();crearTableroBuscaminas();
+                      tableroBuscaminas.seleccionarCasillas(posFila, posColumna);
 
                     }
               
