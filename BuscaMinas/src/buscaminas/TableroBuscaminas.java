@@ -2,6 +2,7 @@ package buscaminas;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,6 +19,9 @@ public class TableroBuscaminas {
     int numFilas;
     int numColumnas;
     int numMinas;
+    
+    
+     Consumer<List<Casilla>> eventoPartidaPerdida;
   
     
 
@@ -52,7 +56,7 @@ public class TableroBuscaminas {
         actualizarNMinas();
         
     }
-    private void imprimirTablero(){
+    public void imprimirTablero(){
         for (int i = 0; i < casilla.length; i++) {
             for (int j = 0; j < casilla[i].length; j++) {
                 System.out.print(casilla[i][j].isMina()?"1":"0");
@@ -136,12 +140,33 @@ public class TableroBuscaminas {
          }
          return listaCasillas;
      }
+     public void seleccionarCasillas(int posFila, int posColumna){
+         if (this.casilla[posFila][posColumna].isMina()){
+             List<Casilla> casillasConMinas=new LinkedList<>();
+              for (int i = 0; i < casilla.length; i++) {
+            for (int j = 0; j < casilla[i].length; j++) {
+                if (casilla[i][j].isMina()){
+                   casillasConMinas.add(casilla[i][j]);               
+                }
+            }
+          }
+            eventoPartidaPerdida.accept(casillasConMinas);
+         }
+     }
+     
     public static void main(String[] args) {
         // TODO code application logic here
         buscaminas.TableroBuscaminas tablero = new buscaminas.TableroBuscaminas(5, 5, 5);
         tablero.imprimirTablero();
         System.out.println("--------------");
         tablero.imprimirPistas();
+    }
+
+    /**
+     * @param eventoPartidaPerdida the eventoPartidaPerdida to set
+     */
+    public void setEventoPartidaPerdida(Consumer<List<Casilla>> eventoPartidaPerdida) {
+        this.eventoPartidaPerdida = eventoPartidaPerdida;
     }
   
     }
