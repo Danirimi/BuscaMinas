@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class juego extends javax.swing.JFrame {
     int numFila=10;
     int numColumnas=10;
-    int nummMinas=20;
+    int nummMinas=10;
      
     JButton [][] botonesTablero;
     TableroBuscaminas tableroBuscaminas;
@@ -44,11 +44,23 @@ public class juego extends javax.swing.JFrame {
             }
         });
         
+        tableroBuscaminas.setEventoPartidaGanada(new Consumer<List<Casilla>>(){
+            @Override
+            public void accept(List<Casilla> t) {
+             for (Casilla casillaConMina: t){
+                 botonesTablero[casillaConMina.getPosFila()][casillaConMina.getPosColumna()].setText(":)");
+                 
+             }   
+            }
+        });
+        
+        
         tableroBuscaminas.setEventoCasillaAbierta(new Consumer<Casilla>() {
             @Override
             public void accept(Casilla t) {
               botonesTablero[t.getPosFila()][t.getPosColumna()].setEnabled(false);
-              botonesTablero[t.getPosFila()][t.getPosColumna()].setText(t.getNumMinasAlrededor()+"");
+              botonesTablero[t.getPosFila()][t.getPosColumna()]
+                      .setText(t.getNumMinasAlrededor()==0?"":t.getNumMinasAlrededor()+"");
                
             }
         });
@@ -96,8 +108,8 @@ public class juego extends javax.swing.JFrame {
         String [] coordenada=btn.getName().split(",");
         int posFila=Integer.parseInt(coordenada[0]);
         int posColumna=Integer.parseInt(coordenada[1]);
-        JOptionPane.showMessageDialog(rootPane, posFila+","+posColumna);
-        tableroBuscaminas.seleccionarCasillas(posFila, posColumna);
+   
+        tableroBuscaminas.seleccionarCasilla(posFila, posColumna);
 
     }
               
