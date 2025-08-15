@@ -90,6 +90,7 @@ public class TableroBuscaminas {
                 if (casilla[i][j].isMina()){
                     List<Casilla> casillasAlrededor = obtenerCasillasAlrededor(i, j);
                     casillasAlrededor.forEach((c)->c.IncrementarNumeroMinasAlrededor());
+                      
                 }
             }
           
@@ -168,6 +169,9 @@ public class TableroBuscaminas {
         for (Casilla casilla : casillasAlrededor) {
             if (!casilla.isAbierta()) {
                 seleccionarCasilla(casilla.getPosFila(), casilla.getPosColumna());
+                if (eventoPartidaPerdida != null) {
+                            eventoPartidaPerdida.accept(null);
+                        }
             }
         }
     }else{
@@ -175,6 +179,10 @@ public class TableroBuscaminas {
     }
     if(partidaGanada()){
        eventoPartidaGanada.accept(obtenerCasillaConMinas());
+       if (eventoPartidaGanada != null) {
+                        eventoPartidaGanada.accept(null);
+                    }
+       
     }
 }
      void marcarCasillaAbierta(int posFila,int posColumna){
@@ -185,7 +193,7 @@ public class TableroBuscaminas {
 
      }   
      boolean partidaGanada(){
-         return numCasillasAbiertas>=(numFilas*numColumnas)-numMinas;
+         return numCasillasAbiertas>=(numFilas*numColumnas)-numMinas; 
      }
     public static void main(String[] args) {
         // TODO code application logic here

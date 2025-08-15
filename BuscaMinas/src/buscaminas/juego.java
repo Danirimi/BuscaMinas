@@ -53,6 +53,13 @@ public class juego extends javax.swing.JFrame {
     }
     private void crearTableroBuscaminas(){
         tableroBuscaminas=new TableroBuscaminas(numFila, numColumnas, nummMinas);
+         tableroBuscaminas.setEventoPartidaPerdida(casillas -> {
+        JOptionPane.showMessageDialog(null, "💣 ¡Perdiste! Pisaste una mina.");
+            });
+
+            tableroBuscaminas.setEventoPartidaGanada(casillas -> {
+                JOptionPane.showMessageDialog(null, "🏆 ¡Ganaste! Has encontrado todas las casillas seguras.");
+            });
         tableroBuscaminas.setEventoPartidaPerdida(new Consumer<List<Casilla>>(){
             @Override
             public void accept(List<Casilla> t) {
