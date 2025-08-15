@@ -29,8 +29,27 @@ public class juego extends javax.swing.JFrame {
      */
     public juego() {
         initComponents();
+       juegoNuevo();
+    }
+    
+    public void descargarControles (){
+        if(botonesTablero!=null){
+            for (int i = 0;i < botonesTablero.length;i++){
+                for (int j= 0; j < botonesTablero[i].length;j++ ){
+                    if(botonesTablero[i][j]!=null){
+                        getContentPane().remove(botonesTablero [i][j]);
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    private void juegoNuevo(){
+        descargarControles();
         cargarControles();
         crearTableroBuscaminas();
+        repaint();
     }
     private void crearTableroBuscaminas(){
         tableroBuscaminas=new TableroBuscaminas(numFila, numColumnas, nummMinas);
@@ -102,6 +121,11 @@ public class juego extends javax.swing.JFrame {
                 getContentPane().add(botonesTablero [i][j]);
             }
         }
+        this.setSize(botonesTablero[numFila-1][numColumnas-1].getX()+
+                botonesTablero[numFila-1][numColumnas-1].getWidth()+30,
+                botonesTablero[numFila-1][numColumnas-1].getY()+
+                botonesTablero[numFila-1][numColumnas-1].getHeight()+70
+        );
     }
     private void btnClick(ActionEvent e) {
         JButton btn = (JButton)e.getSource();
@@ -126,7 +150,47 @@ public class juego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        menuNuevoJuego = new javax.swing.JMenuItem();
+        menuTamaño = new javax.swing.JMenuItem();
+        numeroMinas = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jMenu1.setText("Juego");
+
+        menuNuevoJuego.setText("Nuevo");
+        menuNuevoJuego.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNuevoJuegoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuNuevoJuego);
+
+        menuTamaño.setText("Tamaño");
+        menuTamaño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTamañoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuTamaño);
+
+        numeroMinas.setText("Numero Minas");
+        numeroMinas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numeroMinasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(numeroMinas);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,11 +200,32 @@ public class juego extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 277, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuNuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevoJuegoActionPerformed
+        
+        juegoNuevo();  
+    }//GEN-LAST:event_menuNuevoJuegoActionPerformed
+
+    private void menuTamañoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTamañoActionPerformed
+       int num=Integer.parseInt(JOptionPane.showInputDialog("Dijite  tamaño de la matriz n*n"));
+        this.numFila=num;
+        this.numColumnas=num;
+        juegoNuevo();
+        
+    }//GEN-LAST:event_menuTamañoActionPerformed
+
+    private void numeroMinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroMinasActionPerformed
+        int num=Integer.parseInt(JOptionPane.showInputDialog("Dijite el numero de minas "));
+        this.nummMinas=num;
+        juegoNuevo();
+        
+        
+    }//GEN-LAST:event_numeroMinasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,5 +264,11 @@ public class juego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem menuNuevoJuego;
+    private javax.swing.JMenuItem menuTamaño;
+    private javax.swing.JMenuItem numeroMinas;
     // End of variables declaration//GEN-END:variables
 }
