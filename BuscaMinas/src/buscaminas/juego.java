@@ -53,13 +53,32 @@ public class juego extends javax.swing.JFrame {
     }
     private void crearTableroBuscaminas(){
         tableroBuscaminas=new TableroBuscaminas(numFila, numColumnas, nummMinas);
-         tableroBuscaminas.setEventoPartidaPerdida(casillas -> {
-        JOptionPane.showMessageDialog(null, "💣 ¡Perdiste! Pisaste una mina.");
-            });
+tableroBuscaminas.setEventoPartidaPerdida(casillas -> {
+    // Deshabilitar todos los botones del tablero para "parar" la UI
+    if (botonesTablero != null) {
+        for (int i = 0; i < botonesTablero.length; i++) {
+            for (int j = 0; j < botonesTablero[i].length; j++) {
+                botonesTablero[i][j].setEnabled(false);
+            }
+        }
+    }
+    // Mensaje al usuario
+    JOptionPane.showMessageDialog(this, "💣 ¡Perdiste! Pisaste una mina.");
+});
 
-            tableroBuscaminas.setEventoPartidaGanada(casillas -> {
-                JOptionPane.showMessageDialog(null, "🏆 ¡Ganaste! Has encontrado todas las casillas seguras.");
-            });
+        // cuando el jugador gana
+tableroBuscaminas.setEventoPartidaGanada(casillas -> {
+    // Deshabilitar todos los botones del tablero para "parar" la UI
+    if (botonesTablero != null) {
+        for (int i = 0; i < botonesTablero.length; i++) {
+            for (int j = 0; j < botonesTablero[i].length; j++) {
+                botonesTablero[i][j].setEnabled(false);
+            }
+        }
+    }
+    // Mensaje al usuario
+    JOptionPane.showMessageDialog(this, "🏆 ¡Ganaste! Has encontrado todas las casillas seguras.");
+});
         tableroBuscaminas.setEventoPartidaPerdida(new Consumer<List<Casilla>>(){
             @Override
             public void accept(List<Casilla> t) {
